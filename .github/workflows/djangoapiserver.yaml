@@ -55,6 +55,6 @@ jobs:
           fi
             
           docker run --name djangoapiserver -p 80:80 -d --rm dorrry/djangoapiserver
-          EOF         
+      EOF         
  
       
