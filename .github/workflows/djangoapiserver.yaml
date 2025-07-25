@@ -40,22 +40,22 @@ jobs:
 
       - name: Decode SSH key
         run: |
-            echo "${{ secrets.EC2_KEY }}" | base64 -d > ec2-key.pem
-            chmod 600 ec2-key.pem 
+          echo "${{ secrets.EC2_KEY }}" | base64 -d > ec2-key.pem
+          chmod 600 ec2-key.pem 
 
       - name: Connect to EC2 and Deployment
         run: |
-            ssh -o StrictHostKeyChecking=no -i ec2-key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
-            if [ "$(docker ps -a -q -f name=^/djangoapiserver)" ]; then 
-              echo "컨테이너 있음" 
-              docker stop djangoapiserver 
-              docker rmi dorrry/djangoapiserver 
+          ssh -o StrictHostKeyChecking=no -i ec2-key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+          if [ "$(docker ps -a -q -f name=^/djangoapiserver)" ]; then 
+            echo "컨테이너 있음" 
+            docker stop djangoapiserver 
+            docker rmi dorrry/djangoapiserver 
             
-            else 
-              ehco "컨테이너 없음" 
-            fi
+          else 
+            echo "컨테이너 없음" 
+          fi
             
-            docker run --name djangoapiserver -p 80:80 -d --rm dorrry/djangoapiserver
-            EOF         
+          docker run --name djangoapiserver -p 80:80 -d --rm dorrry/djangoapiserver
+          EOF         
  
       
