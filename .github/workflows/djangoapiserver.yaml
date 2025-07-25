@@ -33,7 +33,7 @@ jobs:
           NAME: ${{secrets.DOCKERHUB_USERNAME}}
           REPO: djangoapiserver
         run: |
-          docker build -t $REPO . 
+          docker build --no-cache -t $REPO . 
           docker tag $REPO:latest $NAME/$REPO:latest 
           docker push $NAME/$REPO:latest
 
